@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Theme tokens ─────────────────────────────────────────── */
+:root {
+  --surface-base: #F6F1E8;
+  --surface-alt:  #EDE3CE;
+  --surface-card: #FDFAF5;
+  --surface-deep: #E2D5B8;
+  --accent:       #4D8FAA;
+  --accent-warm:  #B87A4A;
+  --accent-muted: #A8C8D8;
+  --ink:          #1A1208;
+  --ink-mid:      #6B5238;
+  --ink-soft:     #A0896C;
+  --rim:          #D9CCAD;
+}
+
+[data-theme="dark"] {
+  --surface-base: #1A0E08;
+  --surface-alt:  #261608;
+  --surface-card: #201208;
+  --surface-deep: #0E0804;
+  --accent:       #6BAECC;
+  --accent-warm:  #C09060;
+  --accent-muted: #2A6880;
+  --ink:          #F2E8D8;
+  --ink-mid:      #C0A880;
+  --ink-soft:     #806858;
+  --rim:          #3D2810;
+}
+
+/* ── Base ─────────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--surface-base);
+  color: var(--ink);
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.75;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  overflow-x: hidden;
+}
+
+/* ── Scroll animations ───────────────────────────────────── */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-reveal].visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-reveal][data-delay="1"] { transition-delay: 0.1s; }
+[data-reveal][data-delay="2"] { transition-delay: 0.2s; }
+[data-reveal][data-delay="3"] { transition-delay: 0.3s; }
+[data-reveal][data-delay="4"] { transition-delay: 0.4s; }
+[data-reveal][data-delay="5"] { transition-delay: 0.5s; }
+[data-reveal][data-delay="6"] { transition-delay: 0.6s; }
+
+/* ── Typography helpers ──────────────────────────────────── */
+.display-xl {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.display-lg {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+}
+
+.display-md {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.section-label {
+  font-family: 'Raleway', system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.ui-text {
+  font-family: 'Raleway', system-ui, sans-serif;
+}
+
+/* ── Bridge divider ──────────────────────────────────────── */
+.bridge-rule {
+  width: 56px;
+  height: 1px;
+  background: var(--accent);
+  display: block;
+  margin: 0 auto;
+}
+
+/* ── Smooth color transitions ────────────────────────────── */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+
+a, button {
+  transition: all 0.25s ease;
+}
+
+/* ── Scrollbar styling ───────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--surface-alt); }
+::-webkit-scrollbar-thumb { background: var(--ink-soft); border-radius: 3px; }
+
+/* ── Selection ───────────────────────────────────────────── */
+::selection {
+  background: var(--accent-muted);
+  color: var(--ink);
+}
