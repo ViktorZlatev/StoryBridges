@@ -1,5 +1,5 @@
 import { useApp } from '../contexts/AppContext'
-import { content } from '../data/content'
+import { useContent } from '../contexts/ContentContext'
 
 const BridgeIcon = () => (
   <svg width="24" height="16" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -13,6 +13,7 @@ const BridgeIcon = () => (
 
 export default function Footer() {
   const { lang } = useApp()
+  const { content } = useContent()
   const t = content[lang].footer
 
   return (

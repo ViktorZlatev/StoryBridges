@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useApp } from '../contexts/AppContext'
-import { content } from '../data/content'
+import { useContent } from '../contexts/ContentContext'
 
 const BridgeIcon = () => (
   <svg width="28" height="18" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,6 +34,7 @@ const MoonIcon = () => (
 
 export default function Navbar() {
   const { theme, toggleTheme, lang, toggleLang } = useApp()
+  const { content } = useContent()
   const t = content[lang].nav
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)

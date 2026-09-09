@@ -1,9 +1,10 @@
 import { useApp } from '../../contexts/AppContext'
-import { content } from '../../data/content'
+import { useContent } from '../../contexts/ContentContext'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 
 export default function Testimonials() {
   const { lang } = useApp()
+  const { content } = useContent()
   const t = content[lang].testimonials
   const ref = useScrollReveal()
 

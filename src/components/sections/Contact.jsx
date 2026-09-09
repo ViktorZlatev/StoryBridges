@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { useApp } from '../../contexts/AppContext'
-import { content } from '../../data/content'
+import { useContent } from '../../contexts/ContentContext'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 
 function FloatingInput({ label, name, type = 'text', value, onChange }) {
@@ -224,6 +224,7 @@ function ContactItem({ icon, label, value, href }) {
 
 export default function Contact() {
   const { lang } = useApp()
+  const { content } = useContent()
   const t = content[lang].contact
   const ref = useScrollReveal()
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })

@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { useApp } from '../../contexts/AppContext'
-import { content } from '../../data/content'
+import { useContent } from '../../contexts/ContentContext'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 
 export default function Consulting() {
   const { lang } = useApp()
+  const { content } = useContent()
   const t = content[lang].consulting
   const ref = useScrollReveal()
   const [openIndex, setOpenIndex] = useState(null)

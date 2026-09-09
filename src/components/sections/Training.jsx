@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useApp } from '../../contexts/AppContext'
-import { content } from '../../data/content'
+import { useContent } from '../../contexts/ContentContext'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 
 function TrainingCard({ item, lang, index }) {
@@ -145,6 +145,7 @@ function TrainingCard({ item, lang, index }) {
 
 export default function Training() {
   const { lang } = useApp()
+  const { content } = useContent()
   const t = content[lang].training
   const ref = useScrollReveal()
 

@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { useApp } from '../../contexts/AppContext'
-import { content } from '../../data/content'
+import { useContent } from '../../contexts/ContentContext'
 
 export default function Hero() {
   const { lang } = useApp()
+  const { content } = useContent()
   const t = content[lang].hero
   const [visible, setVisible] = useState(false)
   const ref = useRef(null)
