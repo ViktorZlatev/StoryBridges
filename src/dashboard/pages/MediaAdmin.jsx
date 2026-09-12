@@ -1,3 +1,4 @@
+import { useDraft } from '../DraftContext'
 import Field from '../components/Field'
 import ArrayCard from '../components/ArrayCard'
 import SectionShell from '../components/SectionShell'
@@ -19,8 +20,10 @@ function AddBtn({ onClick }) {
   )
 }
 
-export default function MediaAdmin({ data, onChange }) {
-  const set = (key, val) => onChange({ ...data, [key]: val })
+export default function MediaAdmin() {
+  const { draft, lang, updateSection } = useDraft()
+  const data = draft[lang].media
+  const set = (key, val) => updateSection('media', { ...data, [key]: val })
   const setItem = (i, field, val) => {
     const items = [...data.items]
     items[i] = { ...items[i], [field]: val }

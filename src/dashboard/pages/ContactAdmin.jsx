@@ -1,3 +1,4 @@
+import { useDraft } from '../DraftContext'
 import Field from '../components/Field'
 import ArrayCard from '../components/ArrayCard'
 import SectionShell from '../components/SectionShell'
@@ -19,8 +20,10 @@ function AddBtn({ onClick }) {
   )
 }
 
-export default function ContactAdmin({ data, onChange }) {
-  const set = (key, val) => onChange({ ...data, [key]: val })
+export default function ContactAdmin() {
+  const { draft, lang, updateSection } = useDraft()
+  const data = draft[lang].contact
+  const set = (key, val) => updateSection('contact', { ...data, [key]: val })
   const setInfo = (key, val) => set('info', { ...data.info, [key]: val })
   const setForm = (key, val) => set('form', { ...data.form, [key]: val })
   const setOpt = (i, v) => { const a = [...data.form.subjectOptions]; a[i] = v; setForm('subjectOptions', a) }

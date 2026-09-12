@@ -1,3 +1,4 @@
+import { useDraft } from '../DraftContext'
 import Field from '../components/Field'
 import ArrayCard from '../components/ArrayCard'
 import SectionShell from '../components/SectionShell'
@@ -19,8 +20,10 @@ function AddBtn({ onClick }) {
   )
 }
 
-export default function ConsultingAdmin({ data, onChange }) {
-  const set = (key, val) => onChange({ ...data, [key]: val })
+export default function ConsultingAdmin() {
+  const { draft, lang, updateSection } = useDraft()
+  const data = draft[lang].consulting
+  const set = (key, val) => updateSection('consulting', { ...data, [key]: val })
   const setService = (i, field, val) => {
     const services = [...data.services]
     services[i] = { ...services[i], [field]: val }

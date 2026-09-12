@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useDraft } from '../DraftContext'
 import Field from '../components/Field'
 import ArrayCard from '../components/ArrayCard'
 import SectionShell from '../components/SectionShell'
@@ -22,7 +23,12 @@ function AddBtn({ onClick }) {
   )
 }
 
-export default function AboutAdmin({ data, onChange, aneliaData, onAneliaChange, philosophyData, onPhilosophyChange, highlightsData, onHighlightsChange }) {
+export default function AboutAdmin() {
+  const { draft, lang, updateSection } = useDraft()
+  const data = draft[lang].about
+  const aneliaData = draft[lang].anelia
+  const philosophyData = draft[lang].philosophy
+  const highlightsData = draft[lang].highlights
   const [tab, setTab] = useState(0)
 
   const tabStyle = active => ({
@@ -35,18 +41,18 @@ export default function AboutAdmin({ data, onChange, aneliaData, onAneliaChange,
   })
 
   const setAbout = (key, sub, val) => {
-    if (sub) onChange({ ...data, [key]: { ...data[key], [sub]: val } })
-    else onChange({ ...data, [key]: val })
+    if (sub) updateSection('about', { ...data, [key]: { ...data[key], [sub]: val } })
+    else updateSection('about', { ...data, [key]: val })
   }
   const setExpItem = (i, field, val) => {
     const items = [...data.experience.items]
     items[i] = { ...items[i], [field]: val }
-    onChange({ ...data, experience: { ...data.experience, items } })
+    updateSection('about', { ...data, experience: { ...data.experience, items } })
   }
-  const removeExpItem = i => onChange({ ...data, experience: { ...data.experience, items: data.experience.items.filter((_, idx) => idx !== i) } })
-  const addExpItem = () => onChange({ ...data, experience: { ...data.experience, items: [...data.experience.items, { company: '', role: '' }] } })
+  const removeExpItem = i => updateSection('about', { ...data, experience: { ...data.experience, items: data.experience.items.filter((_, idx) => idx !== i) } })
+  const addExpItem = () => updateSection('about', { ...data, experience: { ...data.experience, items: [...data.experience.items, { company: '', role: '' }] } })
 
-  const setAnelia = (key, val) => onAneliaChange({ ...aneliaData, [key]: val })
+  const setAnelia = (key, val) => updateSection('anelia', { ...aneliaData, [key]: val })
   const setStat = (i, field, val) => { const s = [...aneliaData.stats]; s[i] = { ...s[i], [field]: val }; setAnelia('stats', s) }
   const removeStat = i => setAnelia('stats', aneliaData.stats.filter((_, idx) => idx !== i))
   const addStat = () => setAnelia('stats', [...aneliaData.stats, { value: '', label: '' }])
@@ -54,9 +60,9 @@ export default function AboutAdmin({ data, onChange, aneliaData, onAneliaChange,
   const removeCompany = i => setAnelia('companies', aneliaData.companies.filter((_, idx) => idx !== i))
   const addCompany = () => setAnelia('companies', [...aneliaData.companies, ''])
 
-  const setHighlight = (i, field, val) => { const items = [...highlightsData.items]; items[i] = { ...items[i], [field]: val }; onHighlightsChange({ ...highlightsData, items }) }
-  const removeHighlight = i => onHighlightsChange({ ...highlightsData, items: highlightsData.items.filter((_, idx) => idx !== i) })
-  const addHighlight = () => onHighlightsChange({ ...highlightsData, items: [...highlightsData.items, { id: '', icon: '', title: '', desc: '' }] })
+  const setHighlight = (i, field, val) => { const items = [...highlightsData.items]; items[i] = { ...items[i], [field]: val }; updateSection('highlights', { ...highlightsData, items }) }
+  const removeHighlight = i => updateSection('highlights', { ...highlightsData, items: highlightsData.items.filter((_, idx) => idx !== i) })
+  const addHighlight = () => updateSection('highlights', { ...highlightsData, items: [...highlightsData.items, { id: '', icon: '', title: '', desc: '' }] })
 
   return (
     <SectionShell title="About">
@@ -68,9 +74,9 @@ export default function AboutAdmin({ data, onChange, aneliaData, onAneliaChange,
 
       {tab === 0 && (
         <>
-          <Field label="Label" value={philosophyData.label} onChange={v => onPhilosophyChange({ ...philosophyData, label: v })} />
-          <Field label="Heading" value={philosophyData.heading} onChange={v => onPhilosophyChange({ ...philosophyData, heading: v })} />
-          <Field label="Text" value={philosophyData.text} onChange={v => onPhilosophyChange({ ...philosophyData, text: v })} multiline rows={5} />
+          <Field label="Label" value={philosophyData.label} onChange={v => updateSection('philosophy', { ...philosophyData, label: v })} />
+          <Field label="Heading" value={philosophyData.heading} onChange={v => updateSection('philosophy', { ...philosophyData, heading: v })} />
+          <Field label="Text" value={philosophyData.text} onChange={v => updateSection('philosophy', { ...philosophyData, text: v })} multiline rows={5} />
         </>
       )}
 
@@ -113,7 +119,7 @@ export default function AboutAdmin({ data, onChange, aneliaData, onAneliaChange,
 
       {tab === 2 && (
         <>
-          <Field label="Heading" value={highlightsData.heading} onChange={v => onHighlightsChange({ ...highlightsData, heading: v })} />
+          <Field label="Heading" value={highlightsData.heading} onChange={v => updateSection('highlights', { ...highlightsData, heading: v })} />
           <div style={{ marginTop: '0.5rem' }}>
             {highlightsData.items.map((item, i) => (
               <ArrayCard key={i} index={i} onDelete={() => removeHighlight(i)}>

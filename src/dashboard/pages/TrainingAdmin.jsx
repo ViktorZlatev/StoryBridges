@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useDraft } from '../DraftContext'
 import Field from '../components/Field'
 import ArrayCard from '../components/ArrayCard'
 import SectionShell from '../components/SectionShell'
@@ -39,9 +40,11 @@ function StringArrayEditor({ label, items, onChange }) {
   )
 }
 
-export default function TrainingAdmin({ data, onChange }) {
+export default function TrainingAdmin() {
+  const { draft, lang, updateSection } = useDraft()
+  const data = draft[lang].training
   const [tab, setTab] = useState(0)
-  const set = (key, val) => onChange({ ...data, [key]: val })
+  const set = (key, val) => updateSection('training', { ...data, [key]: val })
 
   const setOpenItem = (i, field, val) => {
     const items = [...data.open.items]

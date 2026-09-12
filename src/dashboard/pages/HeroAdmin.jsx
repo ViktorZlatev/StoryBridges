@@ -1,8 +1,9 @@
+import { useDraft } from '../DraftContext'
 import Field from '../components/Field'
 import ArrayCard from '../components/ArrayCard'
 import SectionShell from '../components/SectionShell'
 
-function addBtn(onClick) {
+function AddBtn({ onClick }) {
   return (
     <button
       onClick={onClick}
@@ -23,8 +24,10 @@ function addBtn(onClick) {
   )
 }
 
-export default function HeroAdmin({ data, onChange }) {
-  const set = (key, val) => onChange({ ...data, [key]: val })
+export default function HeroAdmin() {
+  const { draft, lang, updateSection } = useDraft()
+  const data = draft[lang].hero
+  const set = (key, val) => updateSection('hero', { ...data, [key]: val })
   const setWord = (i, v) => { const w = [...data.words]; w[i] = v; set('words', w) }
   const removeWord = i => set('words', data.words.filter((_, idx) => idx !== i))
   const addWord = () => set('words', [...data.words, ''])
@@ -40,7 +43,7 @@ export default function HeroAdmin({ data, onChange }) {
             <Field value={w} onChange={v => setWord(i, v)} />
           </ArrayCard>
         ))}
-        {addBtn(addWord)}
+        <AddBtn onClick={addWord} />
       </div>
 
       <Field label="Subtitle" value={data.subtitle} onChange={v => set('subtitle', v)} multiline rows={3} />

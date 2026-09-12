@@ -1,3 +1,4 @@
+import { useDraft } from '../DraftContext'
 import Field from '../components/Field'
 import ArrayCard from '../components/ArrayCard'
 import SectionShell from '../components/SectionShell'
@@ -19,9 +20,12 @@ function AddBtn({ onClick }) {
   )
 }
 
-export default function NavFooterAdmin({ navData, onNavChange, footerData, onFooterChange }) {
-  const setNav = (key, val) => onNavChange({ ...navData, [key]: val })
-  const setFooter = (key, val) => onFooterChange({ ...footerData, [key]: val })
+export default function NavFooterAdmin() {
+  const { draft, lang, updateSection } = useDraft()
+  const navData = draft[lang].nav
+  const footerData = draft[lang].footer
+  const setNav = (key, val) => updateSection('nav', { ...navData, [key]: val })
+  const setFooter = (key, val) => updateSection('footer', { ...footerData, [key]: val })
   const setLink = (i, field, val) => {
     const links = [...footerData.links]
     links[i] = { ...links[i], [field]: val }
